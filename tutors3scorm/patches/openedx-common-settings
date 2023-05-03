@@ -1,0 +1,9 @@
+def scorm_storage(xblock):
+    from django.conf import settings
+    from storages.backends.s3boto3 import S3Boto3Storage
+
+    return S3Boto3Storage(custom_domain=settings.LMS_BASE)
+
+XBLOCK_SETTINGS["ScormXBlock"] = {
+    "STORAGE_FUNC": scorm_storage,
+}

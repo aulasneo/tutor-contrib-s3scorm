@@ -1,0 +1,2 @@
+recursive-include tutors3scorm/patches *
+recursive-include tutors3scorm/templates *

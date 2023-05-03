@@ -1,0 +1,6 @@
+handle /scorm/* {
+    reverse_proxy {
+        to {{ "https" if S3_USE_SSL else "http" }}://{{ S3SCORM_BUCKET }}.{{ S3SCORM_ENDPOINT }}
+        header_up Host {upstream_hostport}
+    }
+}
