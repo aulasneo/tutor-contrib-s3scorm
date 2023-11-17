@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+Version 15.0.1 (2023-11-17)
 ----------
 - Fix version mismatch
 
