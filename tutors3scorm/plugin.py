@@ -18,6 +18,7 @@ config = {
     # Add here your new settings
     "defaults": {
         "USE_SSL": True,
+        "PATH": ""
     }
 }
 

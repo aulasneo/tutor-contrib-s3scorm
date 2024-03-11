@@ -46,8 +46,10 @@ Configuration
 This plugins require that you setup these two parameters. There are no defaults,
 so leaving any of them not configured will cause an error.
 
-- S3SCORM_BUCKET: name of the bucket (e.g., *openedx-my-file-bucket*)
-- S3SCORM_ENDPOINT: S3 endpoint. E.g., *s3.us-east-1.amazonaws.com*.
+- S3SCORM_BUCKET (mandatory): name of the bucket (e.g., *openedx-my-file-bucket*)
+- S3SCORM_ENDPOINT (mandatory): S3 endpoint. E.g., *s3.us-east-1.amazonaws.com*.
+- S3SCORM_PATH (optional): Path inside the bucket where the 'scorm' directory is located.
+  Include a leading slash and no trailing slash (e.g. "/openedx/media"). Defaults to empty path (root of the bucket).
 
 Optional parameters:
 
