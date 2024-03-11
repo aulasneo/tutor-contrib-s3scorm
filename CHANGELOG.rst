@@ -1,6 +1,11 @@
 Changelog
 =========
 
+Unreleased
+----------
+- Patch also the CMS to allow the SCORM to find the API in Studio.
+- Add S3SCORM_PATH to specify where is the `scorm` folder located.
+
 Version 16.0.0 (2023-11-17)
 ----------
 - Upgrade to Palm
