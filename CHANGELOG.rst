@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+Version 15.1.0 (2024-03-11)
 ----------
 - Patch also the CMS to allow the SCORM to find the API in Studio.
 - Add S3SCORM_PATH to specify where is the `scorm` folder located.
