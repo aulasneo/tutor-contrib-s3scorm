@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+Version 16.1.1 (2024-03-12)
 ----------
 - Fixed SCORM in Studio
 
