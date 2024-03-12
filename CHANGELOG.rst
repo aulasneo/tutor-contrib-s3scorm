@@ -1,6 +1,10 @@
 Changelog
 =========
 
+Unreleased
+----------
+- Fixed SCORM in Studio
+
 Version 16.1.0 (2024-03-11)
 ----------
 - Patch also the CMS to allow the SCORM to find the API in Studio.
