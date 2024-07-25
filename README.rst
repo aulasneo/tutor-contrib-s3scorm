@@ -23,6 +23,9 @@ but the grading function will certainly fail.
 
 This plugin addresses this issue to make graded SCORM XBlocks work.
 
+.. image:: https://img.shields.io/badge/linting-pylint-yellowgreen
+    :target: https://github.com/pylint-dev/pylint
+
 How it works
 ------------
 

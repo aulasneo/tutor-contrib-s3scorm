@@ -1,3 +1,6 @@
+"""
+Setuptools file for tutor-contrib-s3scorm.
+"""
 import io
 import os
 from setuptools import setup, find_packages
@@ -6,11 +9,19 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 
 
 def load_readme():
+    """
+    Load readme file.
+    :return:
+    """
     with io.open(os.path.join(HERE, "README.rst"), "rt", encoding="utf8") as f:
         return f.read()
 
 
 def load_about():
+    """
+    Load about file.
+    :return:
+    """
     about = {}
     with io.open(
         os.path.join(HERE, "tutors3scorm", "__about__.py"),
