@@ -50,7 +50,7 @@ setup(
     packages=find_packages(exclude=["tests*"]),
     include_package_data=True,
     python_requires=">=3.7",
-    install_requires=["tutor >= 17.0.0, < 18.0.0"],
+    install_requires=["tutor >= 18.0.0, < 19.0.0"],
     entry_points={
         "tutor.plugin.v1": [
             "s3scorm = tutors3scorm.plugin"
