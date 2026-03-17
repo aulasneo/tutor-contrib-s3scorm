@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Unreleased
+Version 20.0.0 (2026-03-17)
 ---------------------------
 - Upgrade to Teak / Tutor 20.
 - Fix ``S3SCORM_PATH`` by rewriting the upstream URI instead of embedding a path in the proxy upstream.
