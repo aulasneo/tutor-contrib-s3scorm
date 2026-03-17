@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Unreleased
+---------------------------
+- Upgrade to Teak / Tutor 20.
+- Fix ``S3SCORM_PATH`` by rewriting the upstream URI instead of embedding a path in the proxy upstream.
+- Preserve existing ``ScormXBlock`` settings when injecting the storage hook.
+- Ignore dotfiles when loading Tutor environment patches.
+
 Version 19.0.0 (2025-04-28)
 ----------
 - Upgrade to Sumac

@@ -4,6 +4,4 @@ def scorm_storage(xblock):
 
     return S3Boto3Storage(custom_domain=settings.LMS_BASE)
 
-XBLOCK_SETTINGS["ScormXBlock"] = {
-    "STORAGE_FUNC": scorm_storage,
-}
+XBLOCK_SETTINGS.setdefault("ScormXBlock", {})["STORAGE_FUNC"] = scorm_storage

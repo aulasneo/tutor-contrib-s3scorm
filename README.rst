@@ -43,6 +43,8 @@ Installation
 
     pip install git+https://github.com/aulasneo/tutor-contrib-s3scorm
 
+This release targets Tutor 20 / Open edX Teak.
+
 Configuration
 -------------
 
@@ -57,6 +59,9 @@ so leaving any of them not configured will cause an error.
 Optional parameters:
 
 - S3SCORM_USE_SSL: Default true.
+
+When ``S3SCORM_PATH`` is set, the proxy preserves the public ``/scorm/...`` URL and rewrites
+the upstream request to ``<S3SCORM_PATH>/scorm/...`` inside the bucket.
 
 Usage
 -----
