@@ -48,10 +48,14 @@ This release targets Tutor 20 / Open edX Teak.
 Configuration
 -------------
 
-This plugins require that you setup these two parameters. There are no defaults,
-so leaving any of them not configured will cause an error.
+This plugin integrates with ``tutor-contrib-s3``. By default, ``S3SCORM_BUCKET``
+inherits the value of ``S3_STORAGE_BUCKET`` from that plugin. You only need to
+set ``S3SCORM_BUCKET`` explicitly when SCORM files live in a different bucket.
 
-- S3SCORM_BUCKET (mandatory): name of the bucket (e.g., *openedx-my-file-bucket*)
+These parameters are used by the plugin:
+
+- S3SCORM_BUCKET (optional): name of the bucket (e.g., *openedx-my-file-bucket*).
+  Defaults to ``S3_STORAGE_BUCKET``.
 - S3SCORM_ENDPOINT (mandatory): S3 endpoint. E.g., *s3.us-east-1.amazonaws.com*.
 - S3SCORM_PATH (optional): Path inside the bucket where the 'scorm' directory is located.
   Include a leading slash and no trailing slash (e.g. "/openedx/media"). Defaults to empty path (root of the bucket).

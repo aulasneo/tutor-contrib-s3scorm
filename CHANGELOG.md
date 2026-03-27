@@ -1,6 +1,7 @@
 # Change log
 
 ## Unreleased
+- fix: default `S3SCORM_BUCKET` to `S3_STORAGE_BUCKET` from `tutor-contrib-s3` when not set explicitly
 - feat: add branding-aligned local development automation with a full `Makefile` and pinned dev requirements files
 - feat: replace the older CI/release automation with `test.yml` and tag-driven `publish.yml` workflows
 - ref: adopt a minimal `pyproject.toml` for modern builds while keeping existing package behavior intact

@@ -22,6 +22,7 @@ from .__about__ import __version__
 # Configuration
 config = {
     "defaults": {
+        "BUCKET": "{{ S3_STORAGE_BUCKET }}",
         "USE_SSL": True,
         "PATH": "",
         "VERSION": __version__,
