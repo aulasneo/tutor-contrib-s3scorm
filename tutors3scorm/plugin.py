@@ -1,9 +1,19 @@
 """
 Tutor plugin to enable SCORM packages with S3 storage.
 """
+
 from __future__ import annotations
 
-from importlib import resources
+import sys
+from pathlib import Path
+
+if sys.version_info >= (3, 11):
+    from importlib.resources import files
+else:
+
+    def files(_: str) -> Path:
+        return Path(__file__).resolve().parent
+
 
 from tutor import hooks
 
@@ -23,8 +33,8 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
 )
 
 # Load patches from files
-patches_dir = resources.files("tutors3scorm").joinpath("patches")
-for path in sorted(patches_dir.iterdir(), key=lambda item: item.name):
+patches_dir = files("tutors3scorm").joinpath("patches")
+for path in sorted(patches_dir.iterdir(), key=lambda item: str(item.name)):
     if not path.is_file() or path.name.startswith("."):
         continue
     hooks.Filters.ENV_PATCHES.add_item((path.name, path.read_text(encoding="utf-8")))

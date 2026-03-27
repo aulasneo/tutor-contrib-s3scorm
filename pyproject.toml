@@ -1,0 +1,45 @@
+[project]
+name = "tutor-contrib-s3scorm"
+description = "s3scorm plugin for Tutor"
+authors = [
+  { name = "Andres Gonzalez" },
+]
+license = { text = "AGPLv3" }
+license-files = []
+readme = { file = "README.rst", content-type = "text/x-rst" }
+requires-python = ">=3.11"
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: GNU Affero General Public License v3",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "tutor>=20.0.0,<21.0.0",
+]
+dynamic = ["version"]
+
+[project.urls]
+Code = "https://github.com/aulasneo/tutor-contrib-s3scorm"
+Issues = "https://github.com/aulasneo/tutor-contrib-s3scorm/issues"
+
+[project.entry-points."tutor.plugin.v1"]
+s3scorm = "tutors3scorm.plugin"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "tutors3scorm/__about__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["tutors3scorm"]
+
+[tool.hatch.build.targets.sdist]
+strict-naming = false
+include = ["/tutors3scorm", "/README.rst", "/CHANGELOG.md"]
+exclude = ["tests*"]
