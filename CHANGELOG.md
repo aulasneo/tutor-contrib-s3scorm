@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 21.0.0 (2026-04-21)
 - fix: default `S3SCORM_BUCKET` to `S3_STORAGE_BUCKET` from `tutor-contrib-s3` when not set explicitly
 - feat: make `S3SCORM_ENDPOINT` optional with `S3_HOST`/`S3_PORT` and `S3_REGION` fallbacks, and add `S3SCORM_URL_STYLE` for virtual-hosted or path-style upstreams
 - feat: add branding-aligned local development automation with a full `Makefile` and pinned dev requirements files
