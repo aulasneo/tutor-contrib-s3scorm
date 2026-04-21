@@ -41,24 +41,27 @@ Installation
 
 ::
 
-    pip install git+https://github.com/aulasneo/tutor-contrib-s3scorm
+    pip install tutor-contrib-s3scorm
 
-This release targets Tutor 20 / Open edX Teak.
+This release targets Tutor 21 / Open edX Ulmo.
 
 Configuration
 -------------
 
 This plugin integrates with ``tutor-contrib-s3``. By default, ``S3SCORM_BUCKET``
-inherits the value of ``S3_STORAGE_BUCKET`` from that plugin. You only need to
-set ``S3SCORM_BUCKET`` explicitly when SCORM files live in a different bucket.
+inherits the value of ``S3_STORAGE_BUCKET`` if that setting is defined. You only
+need to set ``S3SCORM_BUCKET`` explicitly when SCORM files live in a different bucket.
 
 These parameters are used by the plugin:
 
 - S3SCORM_BUCKET (optional): name of the bucket (e.g., *openedx-my-file-bucket*).
-  Defaults to ``S3_STORAGE_BUCKET``.
-- S3SCORM_ENDPOINT (mandatory): S3 endpoint. E.g., *s3.us-east-1.amazonaws.com*.
+  Defaults to ``S3_STORAGE_BUCKET`` if that variable is defined.
+- S3SCORM_ENDPOINT (optional): S3 endpoint. E.g., *s3.us-east-1.amazonaws.com*.
+  If unset, the plugin falls back to ``S3_HOST`` and ``S3_PORT``, then ``s3.<S3_REGION>.amazonaws.com``.
 - S3SCORM_PATH (optional): Path inside the bucket where the 'scorm' directory is located.
   Include a leading slash and no trailing slash (e.g. "/openedx/media"). Defaults to empty path (root of the bucket).
+- S3SCORM_URL_STYLE (optional): How the upstream bucket is addressed. Use ``virtual`` for
+  ``<bucket>.<endpoint>`` and ``path`` for ``<endpoint>/<bucket>``. Defaults to ``virtual``.
 
 Optional parameters:
 
@@ -66,6 +69,10 @@ Optional parameters:
 
 When ``S3SCORM_PATH`` is set, the proxy preserves the public ``/scorm/...`` URL and rewrites
 the upstream request to ``<S3SCORM_PATH>/scorm/...`` inside the bucket.
+The upstream endpoint is resolved in this order: ``S3SCORM_ENDPOINT``, ``S3_HOST`` plus
+``S3_PORT`` if set, and finally ``s3.<S3_REGION>.amazonaws.com``.
+When ``S3SCORM_URL_STYLE`` is set to ``path``, the bucket is placed in the upstream URI path
+instead of the hostname.
 
 Usage
 -----
