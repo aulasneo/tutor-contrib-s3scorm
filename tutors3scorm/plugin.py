@@ -22,7 +22,9 @@ from .__about__ import __version__
 # Configuration
 config = {
     "defaults": {
-        "BUCKET": "{{ S3_STORAGE_BUCKET }}",
+        "BUCKET": "{{ S3_STORAGE_BUCKET | default('', true) }}",
+        "ENDPOINT": "",
+        "URL_STYLE": "virtual",
         "USE_SSL": True,
         "PATH": "",
         "VERSION": __version__,
@@ -30,7 +32,8 @@ config = {
 }
 
 hooks.Filters.CONFIG_DEFAULTS.add_items(
-    [(f"S3SCORM_{key}", value) for key, value in config["defaults"].items()]
+    [(f"S3SCORM_{key}", value) for key, value in config["defaults"].items()],
+    priority=hooks.priorities.LOW,
 )
 
 # Load patches from files
@@ -38,4 +41,7 @@ patches_dir = files("tutors3scorm").joinpath("patches")
 for path in sorted(patches_dir.iterdir(), key=lambda item: str(item.name)):
     if not path.is_file() or path.name.startswith("."):
         continue
-    hooks.Filters.ENV_PATCHES.add_item((path.name, path.read_text(encoding="utf-8")))
+    hooks.Filters.ENV_PATCHES.add_item(
+        (path.name, path.read_text(encoding="utf-8")),
+        priority=hooks.priorities.LOW,
+    )

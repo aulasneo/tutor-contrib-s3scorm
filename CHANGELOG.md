@@ -2,11 +2,14 @@
 
 ## Unreleased
 - fix: default `S3SCORM_BUCKET` to `S3_STORAGE_BUCKET` from `tutor-contrib-s3` when not set explicitly
+- feat: make `S3SCORM_ENDPOINT` optional with `S3_HOST`/`S3_PORT` and `S3_REGION` fallbacks, and add `S3SCORM_URL_STYLE` for virtual-hosted or path-style upstreams
 - feat: add branding-aligned local development automation with a full `Makefile` and pinned dev requirements files
 - feat: replace the older CI/release automation with `test.yml` and tag-driven `publish.yml` workflows
 - ref: adopt a minimal `pyproject.toml` for modern builds while keeping existing package behavior intact
 - breaking: require Python 3.11 or newer in package metadata
 - chore: ignore generated Tutor `config.yml` and `env/` artifacts from local test runs
+- Upgrade Tutor compatibility to 21.x for Open edX Ulmo.
+- Refresh development requirements and package metadata for Tutor 21.
 
 ## Version 20.0.0 (2026-03-17)
 - Upgrade to Teak / Tutor 20.

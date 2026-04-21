@@ -37,7 +37,7 @@ test-dist: build ## Check the distribution files
 	twine check dist/*
 
 test-tutor:
-	export TUTOR_ROOT=$$(pwd) && tutor config save --set S3SCORM_BUCKET=test-bucket --set S3SCORM_ENDPOINT=s3.example.com
+	export TUTOR_ROOT=$$(pwd) && tutor config save --set S3SCORM_BUCKET=test-bucket --set S3_REGION=us-east-1 --set S3SCORM_URL_STYLE=path
 	export TUTOR_ROOT=$$(pwd) && tutor plugins enable s3scorm
 
 format: ## Format code automatically

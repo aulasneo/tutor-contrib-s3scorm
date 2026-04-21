@@ -1,7 +1,15 @@
 handle /scorm/* {
+{% if S3SCORM_URL_STYLE == "path" %}
+    rewrite * /{{ S3SCORM_BUCKET }}{{ S3SCORM_PATH }}{uri}
+{% else %}
     rewrite * {{ S3SCORM_PATH }}{uri}
+{% endif %}
     reverse_proxy {
-        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{{ S3SCORM_BUCKET }}.{{ S3SCORM_ENDPOINT }}
+{% if S3SCORM_URL_STYLE == "path" %}
+        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{% if S3SCORM_ENDPOINT %}{{ S3SCORM_ENDPOINT }}{% elif S3_HOST %}{{ S3_HOST }}{% if S3_PORT %}:{{ S3_PORT }}{% endif %}{% elif S3_REGION %}s3.{{ S3_REGION }}.amazonaws.com{% endif %}
+{% else %}
+        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{{ S3SCORM_BUCKET }}.{% if S3SCORM_ENDPOINT %}{{ S3SCORM_ENDPOINT }}{% elif S3_HOST %}{{ S3_HOST }}{% if S3_PORT %}:{{ S3_PORT }}{% endif %}{% elif S3_REGION %}s3.{{ S3_REGION }}.amazonaws.com{% endif %}
+{% endif %}
         header_up Host {upstream_hostport}
     }
 }
