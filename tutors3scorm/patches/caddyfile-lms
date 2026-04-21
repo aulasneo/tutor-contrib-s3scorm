@@ -1,5 +1,9 @@
 # Start of tutor-contrib-s3scorm patch
 handle /scorm/* {
+{% set s3scorm_endpoint = S3SCORM_ENDPOINT | default('', true) %}
+{% set s3_host = S3_HOST | default('', true) %}
+{% set s3_port = S3_PORT | default('', true) %}
+{% set s3_region = S3_REGION | default('', true) %}
 {% if S3SCORM_URL_STYLE == "path" %}
     rewrite * /{{ S3SCORM_BUCKET }}{{ S3SCORM_PATH }}{uri}
 {% else %}
@@ -7,9 +11,9 @@ handle /scorm/* {
 {% endif %}
     reverse_proxy {
 {% if S3SCORM_URL_STYLE == "path" %}
-        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{% if S3SCORM_ENDPOINT %}{{ S3SCORM_ENDPOINT }}{% elif S3_HOST %}{{ S3_HOST }}{% if S3_PORT %}:{{ S3_PORT }}{% endif %}{% elif S3_REGION %}s3.{{ S3_REGION }}.amazonaws.com{% endif %}
+        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{% if s3scorm_endpoint %}{{ s3scorm_endpoint }}{% elif s3_host %}{{ s3_host }}{% if s3_port %}:{{ s3_port }}{% endif %}{% elif s3_region %}s3.{{ s3_region }}.amazonaws.com{% endif %}
 {% else %}
-        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{{ S3SCORM_BUCKET }}.{% if S3SCORM_ENDPOINT %}{{ S3SCORM_ENDPOINT }}{% elif S3_HOST %}{{ S3_HOST }}{% if S3_PORT %}:{{ S3_PORT }}{% endif %}{% elif S3_REGION %}s3.{{ S3_REGION }}.amazonaws.com{% endif %}
+        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{{ S3SCORM_BUCKET }}.{% if s3scorm_endpoint %}{{ s3scorm_endpoint }}{% elif s3_host %}{{ s3_host }}{% if s3_port %}:{{ s3_port }}{% endif %}{% elif s3_region %}s3.{{ s3_region }}.amazonaws.com{% endif %}
 {% endif %}
         header_up Host {upstream_hostport}
     }
