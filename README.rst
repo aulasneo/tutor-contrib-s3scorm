@@ -34,6 +34,9 @@ requests to *LMS_BASE*/scorm/ will be proxied to the S3 endpoint corresponding t
 This will cause that all SCORM assets will be served from the same origin url as the LMS.
 The effect is that the scorm components will be able to access the api located at the parent window.
 
+The same mechanism is also applied to *LMS_BASE*/h5pxblockmedia/ so that H5P content can be
+served from the LMS origin when `h5pxblock` uses S3-backed storage.
+
 To have the
 
 Installation

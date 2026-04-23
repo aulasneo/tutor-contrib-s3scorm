@@ -5,3 +5,10 @@ def scorm_storage(xblock):
     return S3Boto3Storage(custom_domain=settings.LMS_BASE)
 
 XBLOCK_SETTINGS.setdefault("ScormXBlock", {})["STORAGE_FUNC"] = scorm_storage
+
+H5PXBLOCK_STORAGE = {
+    "storage_class": "storages.backends.s3boto3.S3Boto3Storage",
+    "settings": {
+        "custom_domain": "{{ LMS_BASE }}",
+    },
+}
