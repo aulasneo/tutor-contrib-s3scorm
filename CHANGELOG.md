@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 21.1.0 (2026-08-17)
 - feat: add `S3SCORM_CACHE_MAX_AGE` to send a `Cache-Control` header on proxied SCORM assets so browsers stop re-downloading unchanged assets on every page load (default 1 day; set to `0` to disable)
 - feat: add `S3SCORM_COMPRESS` to have Caddy transparently compress text-based SCORM assets (default enabled)
 - feat: add `S3SCORM_CLOUDFRONT_DOMAIN` to proxy `/scorm/*` through a CDN distribution in front of the bucket instead of talking to S3 directly, while keeping assets same-origin with the LMS/CMS so SCORM grading `postMessage` still works
