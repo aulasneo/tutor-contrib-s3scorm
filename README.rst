@@ -77,13 +77,19 @@ instead of the hostname.
 Performance: caching, compression and CDN
 ------------------------------------------
 
-By default, every SCORM asset request is proxied by Caddy straight to S3 on each and every
-request, with no caching or compression. For courses with SCORM packages containing video,
-audio or many images, this adds up: assets are re-fetched in full on every page load, and
-text assets (JS/HTML/JSON) are sent uncompressed. Three settings address this without
-changing how access is controlled — the LMS/CMS still decide who ever reaches
-``/scorm/...`` in the first place, since these XBlocks are only rendered on pages already
-gated by the standard enrollment/authentication checks.
+By default, the SCORM XBlock itself never generates ``/scorm/...`` URLs at all: it links to
+its own ``.../handler/assets_proxy/...`` endpoint, which streams every asset through the LMS/
+CMS Django process regardless of storage backend. That means the ``/scorm/*`` Caddy route
+this plugin installs sits unused until the xblock is told to link to storage URLs directly
+instead — which only happens once ``S3SCORM_CLOUDFRONT_DOMAIN`` is set (see below). Once that
+switch is flipped, every SCORM asset request is proxied by Caddy straight to S3 (or the CDN
+in front of it) on each and every request, with no caching or compression unless configured.
+For courses with SCORM packages containing video, audio or many images this adds up: assets
+are re-fetched in full on every page load, and text assets (JS/HTML/JSON) are sent
+uncompressed. The following settings address this without changing how access is controlled
+— the LMS/CMS still decide who ever reaches a page that embeds the SCORM block in the first
+place, since these XBlocks are only rendered on pages already gated by the standard
+enrollment/authentication checks.
 
 - **S3SCORM_CACHE_MAX_AGE** (optional, default ``86400``): adds a
   ``Cache-Control: public, max-age=<value>, immutable`` header to SCORM asset responses so
@@ -105,6 +111,13 @@ gated by the standard enrollment/authentication checks.
   is set, ``S3SCORM_ENDPOINT``/``S3SCORM_URL_STYLE``/bucket-address settings are ignored for
   upstream addressing (``S3SCORM_PATH`` still applies if your distribution's origin path
   mirrors the bucket layout).
+
+  Setting ``S3SCORM_CLOUDFRONT_DOMAIN`` also switches ``XBLOCK_SETTINGS["ScormXBlock"]
+  ["PROXY_ASSETS_LMS"]`` to ``False``, which is what actually makes the xblock link to
+  ``/scorm/...`` storage URLs instead of its built-in ``assets_proxy`` handler in the first
+  place — without a CDN configured, this plugin leaves ``PROXY_ASSETS_LMS`` untouched (its
+  default, ``True``) and assets keep flowing through Django as before. In other words, the
+  caching/compression settings above only take effect once a CDN domain is set here.
 
 Example, adding a CDN and a one-year cache lifetime on top of the base configuration::
 

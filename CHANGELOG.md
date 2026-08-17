@@ -4,6 +4,7 @@
 - feat: add `S3SCORM_CACHE_MAX_AGE` to send a `Cache-Control` header on proxied SCORM assets so browsers stop re-downloading unchanged assets on every page load (default 1 day; set to `0` to disable)
 - feat: add `S3SCORM_COMPRESS` to have Caddy transparently compress text-based SCORM assets (default enabled)
 - feat: add `S3SCORM_CLOUDFRONT_DOMAIN` to proxy `/scorm/*` through a CDN distribution in front of the bucket instead of talking to S3 directly, while keeping assets same-origin with the LMS/CMS so SCORM grading `postMessage` still works
+- fix: when `S3SCORM_CLOUDFRONT_DOMAIN` is set, also set `XBLOCK_SETTINGS["ScormXBlock"]["PROXY_ASSETS_LMS"] = False` in the LMS/CMS settings patches — without this, the xblock keeps linking to its own `assets_proxy` Django handler regardless of storage backend, so the `/scorm/*` Caddy route (and the caching/compression settings above) was never actually reached by real asset requests. `PROXY_ASSETS_LMS` is left untouched (default `True`) when no CDN domain is configured.
 
 ## Version 21.0.0 (2026-04-21)
 - fix: default `S3SCORM_BUCKET` to `S3_STORAGE_BUCKET` from `tutor-contrib-s3` when not set explicitly

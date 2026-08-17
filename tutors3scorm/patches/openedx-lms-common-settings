@@ -5,3 +5,10 @@ def scorm_storage(xblock):
     return S3Boto3Storage(custom_domain=settings.LMS_BASE)
 
 XBLOCK_SETTINGS.setdefault("ScormXBlock", {})["STORAGE_FUNC"] = scorm_storage
+{% if S3SCORM_CLOUDFRONT_DOMAIN %}
+# A CDN is configured in front of the SCORM bucket (S3SCORM_CLOUDFRONT_DOMAIN):
+# have the xblock link directly to the storage backend's own URL (served
+# through the CDN via the /scorm/* Caddy route) instead of proxying every
+# asset request through this Django handler.
+XBLOCK_SETTINGS["ScormXBlock"]["PROXY_ASSETS_LMS"] = False
+{% endif %}
