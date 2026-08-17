@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 21.1.1 (2026-08-17)
 - Fix cache routing scorm path, and not error pages.
 
 ## Version 21.1.0 (2026-08-17)
