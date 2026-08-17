@@ -27,6 +27,20 @@ config = {
         "URL_STYLE": "virtual",
         "USE_SSL": True,
         "PATH": "",
+        # CDN domain (e.g. a CloudFront distribution) fronting the bucket above.
+        # When set, the Caddy reverse proxy targets this domain instead of the
+        # S3 endpoint directly, so requests benefit from edge caching and
+        # compression while still being served from the LMS/CMS origin.
+        "CLOUDFRONT_DOMAIN": "",
+        # Seconds browsers/intermediate caches may keep SCORM assets before
+        # revalidating. SCORM asset paths are keyed by block usage id and are
+        # typically overwritten in place when a course team republishes a
+        # package, so this is intentionally conservative by default. Set to
+        # 0 to disable the Cache-Control header entirely.
+        "CACHE_MAX_AGE": 86400,
+        # Let Caddy compress text-based responses (JS/HTML/JSON) on the fly
+        # for upstreams that don't already send a compressed representation.
+        "COMPRESS": True,
         "VERSION": __version__,
     }
 }

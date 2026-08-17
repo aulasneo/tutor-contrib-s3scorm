@@ -3,6 +3,20 @@ handle /scorm/* {
 {% set s3_host = S3_HOST | default('', true) %}
 {% set s3_port = S3_PORT | default('', true) %}
 {% set s3_region = S3_REGION | default('', true) %}
+{% set s3scorm_cloudfront = S3SCORM_CLOUDFRONT_DOMAIN | default('', true) %}
+{% if S3SCORM_COMPRESS %}
+    encode zstd gzip
+{% endif %}
+{% if S3SCORM_CACHE_MAX_AGE %}
+    header Cache-Control "public, max-age={{ S3SCORM_CACHE_MAX_AGE }}, immutable"
+{% endif %}
+{% if s3scorm_cloudfront %}
+    rewrite * {{ S3SCORM_PATH }}{uri}
+    reverse_proxy {
+        to {{ "https" if S3SCORM_USE_SSL else "http" }}://{{ s3scorm_cloudfront }}
+        header_up Host {upstream_hostport}
+    }
+{% else %}
 {% if S3SCORM_URL_STYLE == "path" %}
     rewrite * /{{ S3SCORM_BUCKET }}{{ S3SCORM_PATH }}{uri}
 {% else %}
@@ -16,4 +30,5 @@ handle /scorm/* {
 {% endif %}
         header_up Host {upstream_hostport}
     }
+{% endif %}
 }

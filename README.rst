@@ -74,6 +74,44 @@ The upstream endpoint is resolved in this order: ``S3SCORM_ENDPOINT``, ``S3_HOST
 When ``S3SCORM_URL_STYLE`` is set to ``path``, the bucket is placed in the upstream URI path
 instead of the hostname.
 
+Performance: caching, compression and CDN
+------------------------------------------
+
+By default, every SCORM asset request is proxied by Caddy straight to S3 on each and every
+request, with no caching or compression. For courses with SCORM packages containing video,
+audio or many images, this adds up: assets are re-fetched in full on every page load, and
+text assets (JS/HTML/JSON) are sent uncompressed. Three settings address this without
+changing how access is controlled — the LMS/CMS still decide who ever reaches
+``/scorm/...`` in the first place, since these XBlocks are only rendered on pages already
+gated by the standard enrollment/authentication checks.
+
+- **S3SCORM_CACHE_MAX_AGE** (optional, default ``86400``): adds a
+  ``Cache-Control: public, max-age=<value>, immutable`` header to SCORM asset responses so
+  browsers stop re-downloading unchanged assets on every visit. Set to ``0`` to disable the
+  header entirely (previous behavior). Because SCORM asset paths are keyed by block usage id
+  and are typically overwritten in place when a course team re-uploads a package, keep this
+  conservative unless your asset paths are otherwise versioned; raise it (e.g. to
+  ``31536000`` for a year) once you're confident republishing isn't a concern, or your
+  pipeline invalidates/versions asset paths on republish.
+- **S3SCORM_COMPRESS** (optional, default ``true``): has Caddy transparently compress
+  (zstd/gzip) text-based SCORM assets (the SCORM package's own JS/HTML/CSS/JSON) on the fly.
+  Binary assets such as video and images are left as-is. Set to ``false`` to disable.
+- **S3SCORM_CLOUDFRONT_DOMAIN** (optional, default empty): the domain name of a CDN
+  distribution (e.g. a CloudFront distribution) that has the SCORM bucket configured as its
+  origin. When set, Caddy proxies ``/scorm/*`` to this domain instead of talking to S3
+  directly, so requests benefit from edge caching, edge compression and reduced load on the
+  origin bucket — while assets are still served from the same origin as the LMS/CMS, so the
+  SCORM grading ``postMessage`` API continues to work exactly as described above. When this
+  is set, ``S3SCORM_ENDPOINT``/``S3SCORM_URL_STYLE``/bucket-address settings are ignored for
+  upstream addressing (``S3SCORM_PATH`` still applies if your distribution's origin path
+  mirrors the bucket layout).
+
+Example, adding a CDN and a one-year cache lifetime on top of the base configuration::
+
+    tutor config save \
+        --set S3SCORM_CLOUDFRONT_DOMAIN=d123456abcdef8.cloudfront.net \
+        --set S3SCORM_CACHE_MAX_AGE=31536000
+
 Usage
 -----
 
