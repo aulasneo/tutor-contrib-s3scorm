@@ -8,14 +8,18 @@ handle /scorm/* {
 {% if S3SCORM_COMPRESS %}
     encode zstd gzip
 {% endif %}
-{% if S3SCORM_CACHE_MAX_AGE %}
-    header Cache-Control "public, max-age={{ S3SCORM_CACHE_MAX_AGE }}, immutable"
-{% endif %}
 {% if s3scorm_cloudfront %}
     rewrite * {{ S3SCORM_PATH }}{uri}
     reverse_proxy {
         to {{ "https" if S3SCORM_USE_SSL else "http" }}://{{ s3scorm_cloudfront }}
         header_up Host {upstream_hostport}
+{% if S3SCORM_CACHE_MAX_AGE %}
+        @s3scorm_ok status 2xx
+        handle_response @s3scorm_ok {
+            header Cache-Control "public, max-age={{ S3SCORM_CACHE_MAX_AGE }}, immutable"
+            copy_response
+        }
+{% endif %}
     }
 {% else %}
 {% if S3SCORM_URL_STYLE == "path" %}
@@ -30,6 +34,13 @@ handle /scorm/* {
         to {{ "https" if S3SCORM_USE_SSL else "http" }}://{{ S3SCORM_BUCKET }}.{% if s3scorm_endpoint %}{{ s3scorm_endpoint }}{% elif s3_host %}{{ s3_host }}{% if s3_port %}:{{ s3_port }}{% endif %}{% elif s3_region %}s3.{{ s3_region }}.amazonaws.com{% endif %}
 {% endif %}
         header_up Host {upstream_hostport}
+{% if S3SCORM_CACHE_MAX_AGE %}
+        @s3scorm_ok status 2xx
+        handle_response @s3scorm_ok {
+            header Cache-Control "public, max-age={{ S3SCORM_CACHE_MAX_AGE }}, immutable"
+            copy_response
+        }
+{% endif %}
     }
 {% endif %}
 }
