@@ -1,0 +1,21 @@
+tutors3scorm/patches/caddyfile-lms
+  s_025804053ac478::t_92f85a4be085e0 8-9
+tutors3scorm/patches/caddyfile-cms
+  s_025804053ac478::t_92f85a4be085e0 7-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "7b19852eea058734baa74d0043e5a7acd17cd485",
+  "prompts": {},
+  "sessions": {
+    "s_025804053ac478": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a05e69-fd03-7bb3-8d32-5af58225716f",
+        "model": "gpt-5.6-terra"
+      },
+      "human_author": "Andrés González <andres@aulasneo.com>"
+    }
+  }
+}
