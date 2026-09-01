@@ -4,6 +4,8 @@ handle /scorm/* {
 {% set s3_port = S3_PORT | default('', true) %}
 {% set s3_region = S3_REGION | default('', true) %}
 {% set s3scorm_cloudfront = S3SCORM_CLOUDFRONT_DOMAIN | default('', true) %}
+    # Some packages generate asset paths containing repeated slashes.
+    uri path_regexp /{2,} /
 {% if S3SCORM_COMPRESS %}
     encode zstd gzip
 {% endif %}

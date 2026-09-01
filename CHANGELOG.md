@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Fix: patch double forward slashes seen in some packages
+
 ## Version 21.1.1 (2026-08-17)
 - Fix cache routing scorm path, and not error pages.
 
