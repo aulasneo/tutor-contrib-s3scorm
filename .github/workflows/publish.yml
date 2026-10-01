@@ -40,7 +40,7 @@ jobs:
 
   test:
     name: Run tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: release-eligibility
     if: needs.release-eligibility.outputs.on_main == 'true'
     strategy:
@@ -69,7 +69,7 @@ jobs:
 
   publish:
     name: Publish to PyPI
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [release-eligibility, test]
     if: needs.release-eligibility.outputs.on_main == 'true'
     permissions:

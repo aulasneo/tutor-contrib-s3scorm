@@ -8,11 +8,11 @@ BLACK_OPTS = --exclude templates ${SRC_DIRS}
 clean: ## Remove build artifacts
 	rm -rf build dist *.egg-info
 
-upgrade: requirements ## Upgrade project and development dependencies
+upgrade: ## Upgrade project and development dependencies
+	$(PYTHON) -m pip install --upgrade --upgrade-strategy eager -e '.[dev]'
 
-requirements: ## Install project and development dependencies from pyproject.toml
-	$(PYTHON) -m pip install --upgrade "pip>=25.1"
-	$(PYTHON) -m pip install --upgrade --group dev -e .
+requirements: ## Install the project and development dependencies from pyproject.toml
+	$(PYTHON) -m pip install -e '.[dev]'
 
 build: clean ## Build the package
 	$(PYTHON) -m build

@@ -133,6 +133,17 @@ Usage
     tutor plugins enable s3scorm
 
 
+Development
+-----------
+
+Activate a virtual environment, then run ``make requirements`` to install the
+project in editable mode with the ``dev`` extra declared in ``pyproject.toml``.
+This preserves installed versions that satisfy the declared dependencies.
+
+Run ``make upgrade`` to explicitly upgrade project and development dependencies.
+Dependencies are not locked; fresh environments resolve compatible versions.
+Run ``make test`` to check the resulting environment.
+
 License
 -------
 
