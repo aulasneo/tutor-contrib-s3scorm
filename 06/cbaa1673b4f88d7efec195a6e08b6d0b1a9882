@@ -1,0 +1,26 @@
+README.rst
+  s_bb292c03fa88c7::t_1cb61ec6b97c27 140-141,143-144
+  s_bb292c03fa88c7::t_cb246a9a7f0990 136-139,142,145-146
+Makefile
+  s_bb292c03fa88c7::t_1cb61ec6b97c27 11-12,14-15
+pyproject.toml
+  s_bb292c03fa88c7::t_1cb61ec6b97c27 28
+.github/workflows/publish.yml
+  s_bb292c03fa88c7::t_3f743e99cab541 43,72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "06cbaa1673b4f88d7efec195a6e08b6d0b1a9882",
+  "prompts": {},
+  "sessions": {
+    "s_bb292c03fa88c7": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a08b66-2c54-7512-8f95-a17ca260d71d",
+        "model": "gpt-6-astra"
+      },
+      "human_author": "Andrés González <andres@aulasneo.com>"
+    }
+  }
+}
