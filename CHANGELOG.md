@@ -1,5 +1,8 @@
 # Change log
 
+## Unreleased
+- Feat: Upgrade to Verawood
+
 ## Version 21.2.0 (2026-09-01)
 - Fix: patch double forward slashes seen in some packages
 

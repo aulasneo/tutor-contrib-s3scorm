@@ -43,7 +43,7 @@ Installation
 
     pip install tutor-contrib-s3scorm
 
-This release targets Tutor 21 / Open edX Ulmo.
+This release targets Tutor 22 / Open edX Verawood.
 
 Configuration
 -------------

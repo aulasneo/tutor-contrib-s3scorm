@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: docs
+.PHONY: docs requirements upgrade
 
 PYTHON ?= python3
 SRC_DIRS = ./tutors3scorm
@@ -8,12 +8,11 @@ BLACK_OPTS = --exclude templates ${SRC_DIRS}
 clean: ## Remove build artifacts
 	rm -rf build dist *.egg-info
 
-upgrade: ## Compile requirements from requirements.in
-	pip-compile
+upgrade: requirements ## Upgrade project and development dependencies
 
-requirements: ## Install requirements from requirements.txt
-	$(PYTHON) -m pip install --upgrade -r requirements.txt
-	$(PYTHON) -m pip install -e .
+requirements: ## Install project and development dependencies from pyproject.toml
+	$(PYTHON) -m pip install --upgrade "pip>=25.1"
+	$(PYTHON) -m pip install --upgrade --group dev -e .
 
 build: clean ## Build the package
 	$(PYTHON) -m build
