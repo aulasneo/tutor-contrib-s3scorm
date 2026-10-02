@@ -9,7 +9,7 @@ on:
 jobs:
   release-eligibility:
     name: Check release eligibility
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     if: startsWith(github.ref, 'refs/tags/v')
     outputs:
       on_main: ${{ steps.check.outputs.on_main }}
@@ -40,12 +40,12 @@ jobs:
 
   test:
     name: Run tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: release-eligibility
     if: needs.release-eligibility.outputs.on_main == 'true'
     strategy:
       matrix:
-        python-version: ['3.11', '3.12']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
 
     steps:
     - name: Checkout code
@@ -69,7 +69,7 @@ jobs:
 
   publish:
     name: Publish to PyPI
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     needs: [release-eligibility, test]
     if: needs.release-eligibility.outputs.on_main == 'true'
     permissions:
