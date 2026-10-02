@@ -1,6 +1,6 @@
 # Change log
 
-## Unreleased
+## Version 22.0.0 (2026-10-02)
 - Feat: Upgrade to Verawood
 
 ## Version 21.2.0 (2026-09-01)
